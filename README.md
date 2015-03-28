@@ -1,6 +1,6 @@
 # office-climate
 
-TODO: Write description here
+View how hot / cold your staff feel in your office.
 
 ## Installation
 

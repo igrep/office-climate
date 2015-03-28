@@ -4,8 +4,8 @@ Author:                 Yuji Yamamoto <whosekiteneverfly@gmail.com>
 Maintainer:             Yuji Yamamoto <whosekiteneverfly@gmail.com>
 License:                BSD3
 License-File:           LICENSE
--- Synopsis:               
--- Description:            
+Synopsis:               View how hot / cold your staff feel in your office.
+Description:            View how hot / cold your staff feel in your office.
 Cabal-Version:          >= 1.10
 Build-Type:             Simple
 
