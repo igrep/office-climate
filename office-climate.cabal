@@ -16,7 +16,26 @@ Library
   Exposed-Modules:      OfficeClimate
   Other-Modules:        OfficeClimate.Internal
   Build-Depends:        base >= 4 && < 5
+                      , bytestring >= 0.10
+                      , warp >= 3.0
                       , apiary >= 1.4
+                      , apiary-logger >= 1.4
+                      , relational-record >= 0.1
+                      , HDBC-postgresql >= 2.3
+
+executable office-climate
+  Default-Language:     Haskell2010
+  Hs-Source-Dirs:       src
+  Buildable:            True
+  Other-Modules:        OfficeClimate
+                      , OfficeClimate.Internal
+  GHC-Options:          -Wall
+  Main-Is:              Main.hs
+  Build-Depends:        base >= 4 && < 5
+                      , bytestring >= 0.10
+                      , warp >= 3.0
+                      , apiary >= 1.4
+                      , apiary-logger >= 1.4
                       , relational-record >= 0.1
                       , HDBC-postgresql >= 2.3
 
@@ -29,7 +48,10 @@ Test-Suite spec
   Main-Is:              Spec.hs
   Build-Depends:        base
                       , hspec
+                      , bytestring >= 0.10
+                      , warp >= 3.0
                       , apiary >= 1.4
+                      , apiary-logger >= 1.4
                       , relational-record >= 0.1
                       , HDBC-postgresql >= 2.3
 
