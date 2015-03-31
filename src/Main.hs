@@ -1,10 +1,10 @@
-module Main where
-
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE DataKinds #-}
+
+module Main where
 
 import Web.Apiary
 import Web.Apiary.Logger
