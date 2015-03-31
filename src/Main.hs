@@ -79,7 +79,7 @@ main = runApiaryWith (run 3000) (initLogger def) def $ do
             . document "html hello page."
             . action $ do
                 logging "html page is accessed.\n"
-              bytes "<h1>"
+                bytes "<h1>"
                 helloAction
                 appendBytes "</h1>"
 
