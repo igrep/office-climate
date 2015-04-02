@@ -19,76 +19,23 @@ main = runApiaryWith (run 3000) (initLogger def) def $ do
 
 
 
-    [capture|/hello/first::S.ByteString[first name of client.]|]
+  [capture|/temperatures|]
 
-      {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-      {-route capture QQ.-}
+    . method POST $ do
+      accept "application/json"
+        . ([key|feeling|] =:  pInt)
+        . ([key|place|]   =:  pInt)
+        . document "store effective temperature by user"
+        . action $ do
+          logging "text page is accessed.\n"
+          helloAction
 
-      {-name::Type[document] = parameter capture-}
-      {-**name               = consume greedy-}
+  [capture|/api|] . document "api documentation" . action $ do
+    logging "api documentation page is accessed.\n"
+    defaultDocumentationAction def
 
-
-
-      . ([key|last|] ?? "last name of client" =?: pByteString)
-
-          {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-          {-query parameter filter.-}
-
-          {-key QQ is simple helper: `[key|foo|] == (Proxy :: Proxy "foo")`.-}
-          {-(??) is add document to query parameter.-}
-
-
-      . method GET $ do
-
-          {-~~~~~~~~~~-}
-          {-method filter. you can use non-standard method by-}
-          {-string literal (example: method "HOGE").-}
-
-
-
-        accept "text/plain"
-
-          {-~~~~~~~~~~~~~~~~~~-}
-          {-accept filter: filter by Accept header and set content-type of response.-}
-
-
-
-            . document "plain hello page."
-
-                {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-                {-add document to action.-}
-
-
-
-            . action $ do
-
-                {-~~~~~~-}
-                {-splice ActionT monad to filter.-}
-
-
-
-                logging "text page is accessed.\n"
-
-                  {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-                  {-extension action.-}
-
-
-                helloAction
-
-        accept "text/html"
-            . document "html hello page."
-            . action $ do
-                logging "html page is accessed.\n"
-                bytes "<h1>"
-                helloAction
-                appendBytes "</h1>"
-
-    [capture|/api|] . document "api documentation" . action $ do
-        logging "api documentation page is accessed.\n"
-        defaultDocumentationAction def
-
-          {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-          {-auto generated api documentation action.-}
+    {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
+    {-auto generated api documentation action.-}
 
 
 
@@ -103,14 +50,14 @@ helloAction :: Members ["first" := S.ByteString, "last" := Maybe S.ByteString] p
 
             => ActionT exts prms IO ()
 helloAction = do
-    (f, l) <- [params|first, last|]
+  (f, l) <- [params|first, last|]
 
-                {-~~~~~~~~~~~~~~~~~~~~-}
-                {-get parameters. equals to `do { f <- param [key|first|];-}
-                                                {-l <- param [key|last|] }`-}
+              {-~~~~~~~~~~~~~~~~~~~~-}
+              {-get parameters. equals to `do { f <- param [key|first|];-}
+                                              {-l <- param [key|last|] }`-}
 
 
 
-    appendBytes "Hello, "
-    appendBytes f
-    maybe (return ()) (\a -> appendChar ' ' >> appendBytes a) l
+  appendBytes "Hello, "
+  appendBytes f
+  maybe (return ()) (\a -> appendChar ' ' >> appendBytes a) l
