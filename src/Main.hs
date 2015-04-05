@@ -30,6 +30,13 @@ main = runApiaryWith (run 3000) (initLogger def) def $ do
           logging "text page is accessed.\n"
           helloAction
 
+    . method GET $ do
+      accept "application/json"
+        . document "view effective temperature map"
+        . action $ do
+          logging "text page is accessed.\n"
+          helloAction
+
   [capture|/api|] . document "api documentation" . action $ do
     logging "api documentation page is accessed.\n"
     defaultDocumentationAction def
