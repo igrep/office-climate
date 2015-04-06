@@ -15,12 +15,18 @@ Library
   GHC-Options:          -Wall
   Exposed-Modules:      OfficeClimate
   Other-Modules:        OfficeClimate.Internal
+                      , OfficeClimate.Connection
+                      , OfficeClimate.Place
+                      , OfficeClimate.User
+                      , OfficeClimate.TemperatureReport
   Build-Depends:        base >= 4 && < 5
                       , bytestring >= 0.10
                       , warp >= 3.0
                       , apiary >= 1.4
                       , apiary-logger >= 1.4
                       , relational-record >= 0.1
+                      , relational-query-HDBC
+                      , persistable-record
                       , HDBC-postgresql >= 2.3
 
 executable office-climate
@@ -37,6 +43,8 @@ executable office-climate
                       , apiary >= 1.4
                       , apiary-logger >= 1.4
                       , relational-record >= 0.1
+                      , relational-query-HDBC
+                      , persistable-record
                       , HDBC-postgresql >= 2.3
 
 Test-Suite spec
@@ -53,6 +61,8 @@ Test-Suite spec
                       , apiary >= 1.4
                       , apiary-logger >= 1.4
                       , relational-record >= 0.1
+                      , relational-query-HDBC
+                      , persistable-record
                       , HDBC-postgresql >= 2.3
 
 Source-Repository head
