@@ -19,23 +19,23 @@ main = runApiaryWith (run 3000) (initLogger def) def $ do
 
 
 
-  [capture|/temperatures|]
+  [capture|/temperatures|] $ do
 
-    . method POST $ do
+    method POST $ do
       accept "application/json"
         . ([key|feeling|] =:  pInt)
         . ([key|place|]   =:  pInt)
         . document "store effective temperature by user"
         . action $ do
           logging "text page is accessed.\n"
-          helloAction
+          undefined
 
-    . method GET $ do
+    method GET $ do
       accept "application/json"
         . document "view effective temperature map"
         . action $ do
           logging "text page is accessed.\n"
-          helloAction
+          undefined
 
   [capture|/api|] . document "api documentation" . action $ do
     logging "api documentation page is accessed.\n"
