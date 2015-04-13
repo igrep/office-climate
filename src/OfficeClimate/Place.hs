@@ -8,4 +8,4 @@ import Database.Record.TH (derivingShow)
 
 import OfficeClimate.Connection (connect)
 
-$(defineTableFromDB connect driverPostgreSQL "office_climate" "places" [derivingShow])
+$(defineTableFromDB connect driverPostgreSQL "office_climate" "place" [derivingShow])
