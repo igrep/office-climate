@@ -1,9 +1,15 @@
 {-# LANGUAGE TemplateHaskell, MultiParamTypeClasses, FlexibleInstances #-}
 
-module OfficeClimate.User where
+module OfficeClimate.User
+  ( User(..)
+  , createStatement
+  , create
+  )
+where
 
 import Database.HDBC.Query.TH (defineTableFromDB)
 import Database.HDBC.Schema.PostgreSQL (driverPostgreSQL)
+import Database.HDBC.Record.Insert (runInsert)
 import Database.Record.TH (derivingShow)
 
 import Database.Relational.Query (typedInsert, Insert)
@@ -12,5 +18,10 @@ import OfficeClimate.Connection (connect)
 
 $(defineTableFromDB connect driverPostgreSQL "office_climate" "user" [derivingShow])
 
-create :: Insert String
-create = typedInsert tableOfUser name'
+createStatement :: Insert String
+createStatement = typedInsert tableOfUser name'
+
+create :: String -> IO Integer
+create userName = do
+  conn <- connect
+  runInsert conn createStatement userName
