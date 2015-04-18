@@ -9,7 +9,7 @@ where
 
 import Database.HDBC.Query.TH (defineTableFromDB)
 import Database.HDBC.Schema.PostgreSQL (driverPostgreSQL)
-import Database.HDBC.Record.Insert (runInsert)
+import Database.HDBC.Record.Insert (prepareInsert, runPreparedInsert)
 import Database.Record.TH (derivingShow)
 
 import Database.Relational.Query (typedInsert, Insert)
@@ -24,4 +24,5 @@ createStatement = typedInsert tableOfUser name'
 create :: String -> IO Integer
 create userName = do
   conn <- connect
-  runInsert conn createStatement userName
+  ins <- prepareInsert conn createStatement
+  runPreparedInsert ins userName
