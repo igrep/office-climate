@@ -42,7 +42,7 @@ insert into office_climate.temperature_report (
   factor
 ) values (
   1,
-  2,
+  3,
   NOW(),
   -100
 );
