@@ -30,6 +30,9 @@ Library
                       , persistable-record
                       , HDBC-postgresql >= 2.3
                       , HDBC >= 2.3
+                      , filepath >= 1.1
+                      , directory >= 1.2
+                      , template-haskell >= 2.2
 
 executable office-climate
   Default-Language:     Haskell2010
@@ -50,6 +53,9 @@ executable office-climate
                       , persistable-record
                       , HDBC-postgresql >= 2.3
                       , HDBC >= 2.3
+                      , filepath >= 1.1
+                      , directory >= 1.2
+                      , template-haskell >= 2.2
 
 Test-Suite spec
   Type:                 exitcode-stdio-1.0
@@ -70,6 +76,9 @@ Test-Suite spec
                       , persistable-record
                       , HDBC-postgresql >= 2.3
                       , HDBC >= 2.3
+                      , filepath >= 1.1
+                      , directory >= 1.2
+                      , template-haskell >= 2.2
 
 Source-Repository head
   Type:                 git
