@@ -33,6 +33,7 @@ Library
                       , filepath >= 1.1
                       , directory >= 1.2
                       , template-haskell >= 2.2
+                      , aeson >= 0.8
 
 executable office-climate
   Default-Language:     Haskell2010
@@ -56,6 +57,7 @@ executable office-climate
                       , filepath >= 1.1
                       , directory >= 1.2
                       , template-haskell >= 2.2
+                      , aeson >= 0.8
 
 Test-Suite spec
   Type:                 exitcode-stdio-1.0
@@ -79,6 +81,7 @@ Test-Suite spec
                       , filepath >= 1.1
                       , directory >= 1.2
                       , template-haskell >= 2.2
+                      , aeson >= 0.8
 
 Source-Repository head
   Type:                 git
