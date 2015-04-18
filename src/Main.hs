@@ -3,48 +3,66 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Main where
+
+import Language.Haskell.TH
+import System.Directory
+import System.FilePath
 
 import Web.Apiary
 import Web.Apiary.Logger
 import Network.Wai.Handler.Warp
 import qualified Data.ByteString as S
 
+cdThisDirectory :: IO ()
+cdThisDirectory = setCurrentDirectory $(location >>= stringE . takeDirectory . loc_filename)
+
 main :: IO ()
-main = runApiaryWith (run 3000) (initLogger def) def $ do
+main =  do
+  cdThisDirectory
+  runApiaryWith (run 3000) (initLogger def) def $ do
 
-                                  {-~~~~~~~~~~~~~~~~-}
-                                  {-use logger extension-}
-
-
-
-  [capture|/temperatures|] $ do
-
-    method POST $ do
-      accept "application/json"
-        . ([key|feeling|] =:  pInt)
-        . ([key|place|]   =:  pInt)
-        . document "store effective temperature by user"
-        . action $ do
-          logging "text page is accessed.\n"
-          undefined
+                                    {-~~~~~~~~~~~~~~~~-}
+                                    {-use logger extension-}
 
     method GET $ do
-      accept "application/json"
-        . document "view effective temperature map"
-        . action $ do
-          logging "text page is accessed.\n"
-          undefined
+      root . action $ do
+        contentType "text/html"
+        logging "root has been accessed.\n"
 
-  [capture|/api|] . document "api documentation" . action $ do
-    logging "api documentation page is accessed.\n"
-    defaultDocumentationAction def
+        -- FIXME: better directory structure
+        file "index.html" Nothing
 
-    {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
-    {-auto generated api documentation action.-}
+    [capture|/temperatures|] $ do
+
+      method POST $ do
+        accept "application/json"
+          . ([key|feeling|] =:  pInt)
+          . ([key|place|]   =:  pInt)
+          . document "store effective temperature by user"
+          . action $ do
+            logging "text page is accessed.\n"
+            undefined
+
+      method GET $ do
+        accept "application/json"
+          . document "view effective temperature map"
+          . action $ do
+            logging "text page is accessed.\n"
+            undefined
+
+    [capture|/api|] . document "api documentation" . action $ do
+      logging "api documentation page is accessed.\n"
+      defaultDocumentationAction def
+
+      {-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-}
+      {-auto generated api documentation action.-}
 
 
+listEffectiveTemperatureLogs :: ActionT exts prms IO ()
+listEffectiveTemperatureLogs = undefined
 
 
 helloAction :: Members ["first" := S.ByteString, "last" := Maybe S.ByteString] prms
