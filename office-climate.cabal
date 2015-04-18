@@ -16,6 +16,7 @@ Library
   Exposed-Modules:      OfficeClimate
   Other-Modules:        OfficeClimate.Internal
                       , OfficeClimate.Connection
+                      , OfficeClimate.DeriveJSON
                       , OfficeClimate.Place
                       , OfficeClimate.User
                       , OfficeClimate.TemperatureReport
