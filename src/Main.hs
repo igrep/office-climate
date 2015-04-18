@@ -43,6 +43,7 @@ main =  do
           . ([key|place|]   =:  pInt)
           . document "store effective temperature by user"
           . action $ do
+            contentType "application/json"
             logging "text page is accessed.\n"
             undefined
 
@@ -50,6 +51,7 @@ main =  do
         accept "application/json"
           . document "view effective temperature map"
           . action $ do
+            contentType "application/json"
             logging "text page is accessed.\n"
             undefined
 
