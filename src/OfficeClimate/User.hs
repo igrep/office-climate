@@ -2,24 +2,30 @@
 
 module OfficeClimate.User where
 
-import Data.Int (Int32)
-
-import Database.HDBC.Query.TH (defineTableFromDB)
+import Database.HDBC.PostgreSQL (Connection)
+import Database.HDBC.Query.TH (defineTableFromDB, makeRecordPersistableDefault)
 import Database.HDBC.Schema.PostgreSQL (driverPostgreSQL)
 import Database.HDBC.Record.Insert (runInsert)
 import Database.Record.TH (derivingShow)
 
-import Database.Relational.Query (typedInsert, Insert)
+import Database.Relational.Query
+  ( typedInsert
+  , (|$|)
+  , Pi
+  )
 
 import OfficeClimate.Connection (connect)
 
 $(defineTableFromDB connect driverPostgreSQL "office_climate" "user" [derivingShow])
 
-create :: Int32 -> String -> IO User
-create uId userName = do
-  conn <- connect
+data InsertUserParams = InsertUserParams { pName ::  String }
 
-  let u = User uId userName
-  _ <- runInsert conn insertUser u
+makeRecordPersistableDefault ''InsertUserParams
 
-  return u
+piInsertUser :: Pi User InsertUserParams
+piInsertUser = InsertUserParams |$| name'
+
+create :: Connection -> String -> IO Integer
+create conn userName = do
+  let u = InsertUserParams userName
+  runInsert conn (typedInsert tableOfUser piInsertUser) u
