@@ -14,6 +14,6 @@ create table office_climate.temperature_report (
   temperature_report_id serial primary key,
   reporter_user_id integer not null references office_climate.user(user_id),
   place_id integer not null references office_climate.place(place_id),
-  reported_at timestamp not null,
+  reported_at timestamptz not null,
   factor integer not null
 );
